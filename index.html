@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser Permissions Demo - Awareness Tool</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔒 Browser Permissions Demo</h1>
+            <p class="subtitle">Understanding what permissions websites can request and what data they can access</p>
+            <div class="warning-box">
+                <strong>⚠️ Important:</strong> This is an educational tool to demonstrate what permissions browsers can grant to websites. 
+                Think carefully before granting permissions to any website!
+            </div>
+        </header>
+
+        <div class="permissions-grid">
+            <!-- Geolocation Permission -->
+            <div class="permission-card" id="geolocation-card">
+                <div class="permission-header">
+                    <h2>📍 Geolocation</h2>
+                    <span class="status-badge" id="geolocation-status">Not Requested</span>
+                </div>
+                <p class="permission-description">Access your physical location coordinates</p>
+                <button class="request-btn" onclick="requestGeolocation()">Request Permission</button>
+                <div class="permission-data" id="geolocation-data"></div>
+            </div>
+
+            <!-- Notifications Permission -->
+            <div class="permission-card" id="notifications-card">
+                <div class="permission-header">
+                    <h2>🔔 Notifications</h2>
+                    <span class="status-badge" id="notifications-status">Not Requested</span>
+                </div>
+                <p class="permission-description">Send you notifications even when not on the page</p>
+                <button class="request-btn" onclick="requestNotifications()">Request Permission</button>
+                <div class="permission-data" id="notifications-data"></div>
+            </div>
+
+            <!-- Camera Permission -->
+            <div class="permission-card" id="camera-card">
+                <div class="permission-header">
+                    <h2>📷 Camera</h2>
+                    <span class="status-badge" id="camera-status">Not Requested</span>
+                </div>
+                <p class="permission-description">Access your camera for video capture</p>
+                <button class="request-btn" onclick="requestCamera()">Request Permission</button>
+                <div class="permission-data" id="camera-data"></div>
+            </div>
+
+            <!-- Microphone Permission -->
+            <div class="permission-card" id="microphone-card">
+                <div class="permission-header">
+                    <h2>🎤 Microphone</h2>
+                    <span class="status-badge" id="microphone-status">Not Requested</span>
+                </div>
+                <p class="permission-description">Access your microphone for audio recording</p>
+                <button class="request-btn" onclick="requestMicrophone()">Request Permission</button>
+                <div class="permission-data" id="microphone-data"></div>
+            </div>
+
+            <!-- Clipboard Permission -->
+            <div class="permission-card" id="clipboard-card">
+                <div class="permission-header">
+                    <h2>📋 Clipboard</h2>
+                    <span class="status-badge" id="clipboard-status">Not Requested</span>
+                </div>
+                <p class="permission-description">Read and write to your clipboard</p>
+                <button class="request-btn" onclick="requestClipboard()">Request Permission</button>
+                <div class="permission-data" id="clipboard-data"></div>
+            </div>
+
+            <!-- MIDI Permission -->
+            <div class="permission-card" id="midi-card">
+                <div class="permission-header">
+                    <h2>🎹 MIDI Devices</h2>
+                    <span class="status-badge" id="midi-status">Not Requested</span>
+                </div>
+                <p class="permission-description">Access MIDI devices (musical instruments)</p>
+                <button class="request-btn" onclick="requestMIDI()">Request Permission</button>
+                <div class="permission-data" id="midi-data"></div>
+            </div>
+
+            <!-- Motion Sensors Permission -->
+            <div class="permission-card" id="motion-card">
+                <div class="permission-header">
+                    <h2>📱 Motion Sensors</h2>
+                    <span class="status-badge" id="motion-status">Not Requested</span>
+                </div>
+                <p class="permission-description">Access accelerometer, gyroscope data</p>
+                <button class="request-btn" onclick="requestMotionSensors()">Request Permission</button>
+                <div class="permission-data" id="motion-data"></div>
+            </div>
+
+            <!-- Persistent Storage Permission -->
+            <div class="permission-card" id="storage-card">
+                <div class="permission-header">
+                    <h2>💾 Persistent Storage</h2>
+                    <span class="status-badge" id="storage-status">Not Requested</span>
+                </div>
+                <p class="permission-description">Store data permanently on your device</p>
+                <button class="request-btn" onclick="requestPersistentStorage()">Request Permission</button>
+                <div class="permission-data" id="storage-data"></div>
+            </div>
+
+            <!-- Background Sync Permission -->
+            <div class="permission-card" id="background-sync-card">
+                <div class="permission-header">
+                    <h2>🔄 Background Sync</h2>
+                    <span class="status-badge" id="background-sync-status">Not Requested</span>
+                </div>
+                <p class="permission-description">Sync data in the background</p>
+                <button class="request-btn" onclick="requestBackgroundSync()">Request Permission</button>
+                <div class="permission-data" id="background-sync-data"></div>
+            </div>
+
+            <!-- Bluetooth Permission -->
+            <div class="permission-card" id="bluetooth-card">
+                <div class="permission-header">
+                    <h2>📶 Bluetooth</h2>
+                    <span class="status-badge" id="bluetooth-status">Not Requested</span>
+                </div>
+                <p class="permission-description">Access nearby Bluetooth devices</p>
+                <button class="request-btn" onclick="requestBluetooth()">Request Permission</button>
+                <div class="permission-data" id="bluetooth-data"></div>
+            </div>
+
+            <!-- USB Permission -->
+            <div class="permission-card" id="usb-card">
+                <div class="permission-header">
+                    <h2>🔌 USB Devices</h2>
+                    <span class="status-badge" id="usb-status">Not Requested</span>
+                </div>
+                <p class="permission-description">Access USB devices connected to your computer</p>
+                <button class="request-btn" onclick="requestUSB()">Request Permission</button>
+                <div class="permission-data" id="usb-data"></div>
+            </div>
+
+            <!-- Idle Detection Permission -->
+            <div class="permission-card" id="idle-card">
+                <div class="permission-header">
+                    <h2>⏱️ Idle Detection</h2>
+                    <span class="status-badge" id="idle-status">Not Requested</span>
+                </div>
+                <p class="permission-description">Detect when you're idle or away</p>
+                <button class="request-btn" onclick="requestIdleDetection()">Request Permission</button>
+                <div class="permission-data" id="idle-data"></div>
+            </div>
+
+            <!-- Screen Wake Lock Permission -->
+            <div class="permission-card" id="wake-lock-card">
+                <div class="permission-header">
+                    <h2>🔆 Screen Wake Lock</h2>
+                    <span class="status-badge" id="wake-lock-status">Not Requested</span>
+                </div>
+                <p class="permission-description">Prevent screen from turning off</p>
+                <button class="request-btn" onclick="requestWakeLock()">Request Permission</button>
+                <div class="permission-data" id="wake-lock-data"></div>
+            </div>
+        </div>
+
+        <!-- Browser Information Section -->
+        <div class="info-section">
+            <h2>🌐 Browser Information (No Permission Required)</h2>
+            <div class="info-grid" id="browser-info"></div>
+        </div>
+
+        <footer>
+            <p>⚠️ Remember: Only grant permissions to websites you trust. Each permission gives the website access to sensitive data or capabilities.</p>
+            <p class="small-text">This is an educational tool. Check your browser's permission settings regularly.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
