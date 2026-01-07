@@ -623,9 +623,6 @@ async function autoRequestPermissions() {
         return;
     }
     
-    // Mark that we've requested permissions
-    localStorage.setItem('permissionsRequested', 'true');
-    
     // Request permissions that don't require user interaction
     // We'll request them sequentially to avoid overwhelming the user
     const permissionsToRequest = [
@@ -639,16 +636,26 @@ async function autoRequestPermissions() {
         { name: 'Wake Lock', func: requestWakeLock }
     ];
     
-    // Request permissions with a small delay between each to avoid browser throttling
-    for (const permission of permissionsToRequest) {
-        try {
-            await permission.func();
-            // Small delay to avoid overwhelming the browser
-            await new Promise(resolve => setTimeout(resolve, 100));
-        } catch (error) {
-            // Continue even if one permission fails
-            console.log(`Auto-request failed for ${permission.name}:`, error);
+    // Delay between permission requests to avoid browser throttling
+    const PERMISSION_REQUEST_DELAY_MS = 100;
+    
+    try {
+        // Request permissions with a small delay between each to avoid browser throttling
+        for (const permission of permissionsToRequest) {
+            try {
+                await permission.func();
+                // Small delay to avoid overwhelming the browser
+                await new Promise(resolve => setTimeout(resolve, PERMISSION_REQUEST_DELAY_MS));
+            } catch (error) {
+                // Continue even if one permission fails
+                console.log(`Auto-request failed for ${permission.name}:`, error);
+            }
         }
+        
+        // Mark that we've successfully requested permissions
+        localStorage.setItem('permissionsRequested', 'true');
+    } catch (error) {
+        console.error('Error during auto-request permissions:', error);
     }
 }
 
