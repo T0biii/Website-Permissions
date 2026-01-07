@@ -613,7 +613,56 @@ function displayBrowserInfo() {
     browserInfo.innerHTML = info;
 }
 
+// Auto-request all permissions on first page load
+async function autoRequestPermissions() {
+    // Check if permissions were already requested
+    const permissionsRequested = localStorage.getItem('permissionsRequested');
+    
+    if (permissionsRequested === 'true') {
+        // Permissions already requested in a previous session
+        return;
+    }
+    
+    // Request permissions that don't require user interaction
+    // We'll request them sequentially to avoid overwhelming the user
+    const permissionsToRequest = [
+        { name: 'Geolocation', func: requestGeolocation },
+        { name: 'Notifications', func: requestNotifications },
+        { name: 'Clipboard', func: requestClipboard },
+        { name: 'MIDI', func: requestMIDI },
+        { name: 'Persistent Storage', func: requestPersistentStorage },
+        { name: 'Background Sync', func: requestBackgroundSync },
+        { name: 'Idle Detection', func: requestIdleDetection },
+        { name: 'Wake Lock', func: requestWakeLock }
+    ];
+    
+    // Delay between permission requests to avoid browser throttling
+    const PERMISSION_REQUEST_DELAY_MS = 100;
+    
+    try {
+        // Request permissions with a small delay between each to avoid browser throttling
+        for (const permission of permissionsToRequest) {
+            try {
+                await permission.func();
+                // Small delay to avoid overwhelming the browser
+                await new Promise(resolve => setTimeout(resolve, PERMISSION_REQUEST_DELAY_MS));
+            } catch (error) {
+                // Continue even if one permission fails
+                console.log(`Auto-request failed for ${permission.name}:`, error);
+            }
+        }
+        
+        // Mark that we've successfully requested permissions
+        localStorage.setItem('permissionsRequested', 'true');
+    } catch (error) {
+        console.error('Error during auto-request permissions:', error);
+    }
+}
+
 // Initialize browser info on page load
 document.addEventListener('DOMContentLoaded', () => {
     displayBrowserInfo();
+    
+    // Auto-request permissions on first load
+    autoRequestPermissions();
 });

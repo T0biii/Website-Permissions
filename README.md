@@ -42,10 +42,13 @@ The application also displays information that doesn't require permissions:
 ## 📖 How to Use
 
 1. **Open the Application**: Simply open `index.html` in a modern web browser
-2. **Review Permissions**: Read the description for each permission
-3. **Request Permission**: Click the "Request Permission" button for any permission
-4. **Grant or Deny**: Your browser will prompt you to grant or deny the permission
-5. **View Data**: If granted, see what data the website can access
+2. **Auto-Request on First Visit**: On your first visit, the application will automatically request several permissions (Geolocation, Notifications, Clipboard, MIDI, Persistent Storage, Background Sync, Idle Detection, and Wake Lock) to demonstrate the permission prompts
+3. **Review Permissions**: Read the description for each permission
+4. **Manual Request**: Click the "Request Permission" button for any permission you want to test manually
+5. **Grant or Deny**: Your browser will prompt you to grant or deny the permission
+6. **View Data**: If granted, see what data the website can access
+
+**Note**: Permissions are only auto-requested on the first visit. Subsequent visits won't trigger automatic permission requests unless you clear your browser's local storage.
 
 ## 🌐 Browser Compatibility
 
